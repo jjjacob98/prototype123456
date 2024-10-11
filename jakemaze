@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Grader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #007BFF;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        select, textarea, button {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007BFF;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .text-box {
+            margin-bottom: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background: #007BFF;
+            color: #ffffff;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+        .required {
+            color: red;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Writing Grader</h1>
+</header>
+
+<div class="container">
+    <div class="error-message" id="errorMessage" style="display:none;">Please fill all required spaces</div>
+
+    <label for="grade">Grade: <span id="gradeAsterisk" class="required" style="display:none;">*</span></label>
+    <select id="grade">
+        <option value="">Select Grade</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+	<option value="10">10</option>
+	<option value="11">11</option>
+	<option value="12">12</option>
+    </select>
+
+    <label for="scale">Scale: <span id="scaleAsterisk" class="required" style="display:none;">*</span></label>
+    <select id="scale">
+        <option value="">Select Scale</option>
+        <option value="A-F">A-F</option>
+        <option value="1-4">1-4</option>
+    </select>
+
+    <div class="text-box">
+        <label for="rubric">Rubric: <span id="rubricAsterisk" class="required" style="display:none;">*</span></label>
+        <textarea id="rubric" rows="5" placeholder="Enter rubric here..."></textarea>
+    </div>
+
+    <div class="text-box">
+        <label for="comments">Comments: <span id="commentsAsterisk" class="required" style="display:none;">*</span></label>
+        <textarea id="comments" rows="5" placeholder="Enter comments here..."></textarea>
+    </div>
+
+    <div class="text-box">
+        <label for="writing">Writing: <span id="writingAsterisk" class="required" style="display:none;">*</span></label>
+        <textarea id="writing" rows="5" placeholder="Enter writing here..."></textarea>
+    </div>
+
+    <!-- Submit button -->
+    <button type="button" onclick="validateForm()">Submit</button>
+</div>
+
+<footer>
+    <p>&copy; Master Panjeet and Jacob LLC. All rights reserved.</p>
+</footer>
+
+<script>
+    function validateForm() {
+        var isValid = true;
+        
+        // Clear previous error states
+        document.getElementById('errorMessage').style.display = 'none';
+        document.getElementById('gradeAsterisk').style.display = 'none';
+        document.getElementById('scaleAsterisk').style.display = 'none';
+        document.getElementById('rubricAsterisk').style.display = 'none';
+        document.getElementById('commentsAsterisk').style.display = 'none';
+        document.getElementById('writingAsterisk').style.display = 'none';
+        
+        // Get field values
+        var grade = document.getElementById('grade').value;
+        var scale = document.getElementById('scale').value;
+        var rubric = document.getElementById('rubric').value;
+        var comments = document.getElementById('comments').value;
+        var writing = document.getElementById('writing').value;
+
+        // Check each field
+        if (grade === "") {
+            document.getElementById('gradeAsterisk').style.display = 'inline';
+            isValid = false;
+        }
+        if (scale === "") {
+            document.getElementById('scaleAsterisk').style.display = 'inline';
+            isValid = false;
+        }
+        if (rubric === "") {
+            document.getElementById('rubricAsterisk').style.display = 'inline';
+            isValid = false;
+        }
+        if (comments === "") {
+            document.getElementById('commentsAsterisk').style.display = 'inline';
+            isValid = false;
+        }
+        if (writing === "") {
+            document.getElementById('writingAsterisk').style.display = 'inline';
+            isValid = false;
+        }
+
+        // If any fields are empty, show error message and scroll to top
+        if (!isValid) {
+            document.getElementById('errorMessage').style.display = 'block';
+            window.scrollTo(0, 0); // Scroll to the top of the page
+        } else {
+            // Redirect to finished grading page with the form data as query parameters
+            var url = "finishedGrading.html?grade=" + encodeURIComponent(grade) +
+                      "&scale=" + encodeURIComponent(scale) +
+                      "&rubric=" + encodeURIComponent(rubric) +
+                      "&comments=" + encodeURIComponent(comments) +
+                      "&writing=" + encodeURIComponent(writing);
+            window.location.href = url;
+        }
+    }
+</script>
+
+</body>
+</html>
